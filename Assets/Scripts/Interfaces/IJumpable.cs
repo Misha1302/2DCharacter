@@ -1,8 +1,7 @@
 namespace Interfaces
 {
-    public interface IJumpable
+    public interface IJumpable : IUpdatable
     {
-        public void Updating();
         public void Init(IAnimated animated, IMovable movable);
         public bool IsGrounded();
     }

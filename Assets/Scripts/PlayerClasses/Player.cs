@@ -20,9 +20,9 @@ namespace PlayerClasses
 
         private void Update()
         {
-            _fightable.Updating();
-            _movable.Updating();
-            _jumpable.Updating();
+            _fightable.UpdateScript();
+            _movable.UpdateScript();
+            _jumpable.UpdateScript();
         }
 
         private void InitInterfaces()

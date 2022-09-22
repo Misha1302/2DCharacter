@@ -26,7 +26,7 @@ namespace PlayerClasses
             
             if (!IsGrounded() && isJumping)
             {
-                var isRunning = _movable.HorizontalMovement() != 0;
+                var isRunning = _movable.HorizontalMovement != 0;
                 
                 if (!isRunning) StartIdleAnimation();
                 else StartRunAnimation();
@@ -63,7 +63,7 @@ namespace PlayerClasses
 
         #region interface implementation
 
-        public void Updating()
+        public void UpdateScript()
         {
             if (!Input.GetKeyDown(KeyCode.Space)) return;
             if (!IsGrounded()) return;

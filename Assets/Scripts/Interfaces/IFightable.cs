@@ -1,8 +1,7 @@
 namespace Interfaces
 {
-    public interface IFightable
+    public interface IFightable : IUpdatable
     {
-        public void Updating();
         public bool IsFighting();
         public void Init(IAnimated animated);
     }

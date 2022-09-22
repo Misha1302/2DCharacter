@@ -71,7 +71,7 @@ namespace PlayerClasses
             return _fighting;
         }
 
-        public void Updating()
+        public void UpdateScript()
         {
             if (_fighting || !Input.GetMouseButton(0)) return;
 

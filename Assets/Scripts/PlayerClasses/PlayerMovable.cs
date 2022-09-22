@@ -20,7 +20,6 @@ namespace PlayerClasses
 
         private IAnimated _animated;
         private IFightable _fightable;
-        private int _horizontalFactor;
         private float _horizontalStopSpeed;
         private IJumpable _jumpable;
         private float _t;
@@ -72,7 +71,7 @@ namespace PlayerClasses
 
         private void MoveInternal()
         {
-            var horizontal = _horizontalFactor * speed * Time.deltaTime;
+            var horizontal = HorizontalMovement * speed * Time.deltaTime;
 
             playerRigidbody.AddForce(new Vector2(horizontal, 0));
 
@@ -84,9 +83,9 @@ namespace PlayerClasses
         private void Move()
         {
             // 1 if axis > 0, 0 if axis == 0, -1 if axis < 0
-            _horizontalFactor = Math.Sign(Input.GetAxis(HORIZONTAL_AXIS));
+            HorizontalMovement = Math.Sign(Input.GetAxis(HORIZONTAL_AXIS));
 
-            if (_horizontalFactor == 0 || _fightable.IsFighting())
+            if (HorizontalMovement == 0 || _fightable.IsFighting())
             {
                 if (_horizontalStopSpeed == 0)
                 {
@@ -105,16 +104,13 @@ namespace PlayerClasses
 
         #region interface implementation
 
-        public void Updating()
+        public float HorizontalMovement { get; private set; }
+
+        public void UpdateScript()
         {
             if (!_jumpable.IsGrounded()) return;
 
             Move();
-        }
-
-        public float HorizontalMovement()
-        {
-            return _horizontalFactor;
         }
 
         public void Init(IAnimated animated, IJumpable jumpable, IFightable fightable)
