@@ -1,4 +1,3 @@
-using System;
 using Interfaces;
 using UnityEngine;
 
@@ -24,8 +23,15 @@ namespace PlayerClasses
         private void OnTriggerEnter2D(Collider2D col)
         {
             var isJumping = _animated.GetCurrentAnimation() == AnimationsEnum.Jump;
-            var isStanding = Math.Abs(_movable.HorizontalMovement()) == 0;
-            if (!IsGrounded() && isJumping && isStanding) StartIdleAnimation();
+            
+            if (!IsGrounded() && isJumping)
+            {
+                var isRunning = _movable.HorizontalMovement() != 0;
+                
+                if (!isRunning) StartIdleAnimation();
+                else StartRunAnimation();
+            }
+
             _numberOfContacts++;
         }
 
@@ -39,14 +45,29 @@ namespace PlayerClasses
             playerRigidbody.AddForce(new Vector2(0, jumpPower));
             StartJumpAnimation();
         }
-        
+
+        private void StartIdleAnimation()
+        {
+            _animated.StartAnimation(AnimationsEnum.Idle);
+        }
+
+        private void StartRunAnimation()
+        {
+            _animated.StartAnimation(AnimationsEnum.Run);
+        }
+
+        private void StartJumpAnimation()
+        {
+            _animated.StartAnimation(AnimationsEnum.Jump);
+        }
+
         #region interface implementation
 
         public void Updating()
         {
             if (!Input.GetKeyDown(KeyCode.Space)) return;
             if (!IsGrounded()) return;
-            
+
             Jump();
         }
 
@@ -60,17 +81,7 @@ namespace PlayerClasses
         {
             return _numberOfContacts > 0;
         }
-        
+
         #endregion
-
-        private void StartIdleAnimation()
-        {
-            _animated.StartAnimation(AnimationsEnum.Idle);
-        }
-
-        private void StartJumpAnimation()
-        {
-            _animated.StartAnimation(AnimationsEnum.Jump);
-        }
     }
 }

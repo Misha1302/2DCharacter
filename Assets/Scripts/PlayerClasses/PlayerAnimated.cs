@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace PlayerClasses
         private AnimationsEnum? _currentAnimation;
 
         #region interface implementation
-        
+
         public AnimationsEnum? GetCurrentAnimation()
         {
             return _currentAnimation;
@@ -31,10 +32,10 @@ namespace PlayerClasses
         {
             _animator = animator;
             _animationsDictionary = animationsDictionary;
-            
+
             StartAnimation(AnimationsEnum.Idle);
         }
-        
+
         #endregion
     }
 }
