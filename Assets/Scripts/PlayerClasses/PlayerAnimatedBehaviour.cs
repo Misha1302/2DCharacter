@@ -1,17 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 
 namespace PlayerClasses
 {
-    public class PlayerAnimated : MonoBehaviour, IAnimated
+    public class PlayerAnimatedBehaviour : MonoBehaviour, IAnimated
     {
         private Dictionary<AnimationsEnum, string> _animationsDictionary;
         private Animator _animator;
         private AnimationsEnum? _currentAnimation;
 
-        #region interface implementation
+        #region IAnimated interface implementation
 
         public AnimationsEnum? GetCurrentAnimation()
         {

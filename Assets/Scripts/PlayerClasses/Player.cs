@@ -47,10 +47,10 @@ namespace PlayerClasses
 
         private void SetVariables()
         {
-            _fightable ??= GetComponent<IFightable>();
-            _movable ??= GetComponent<IMovable>();
-            _jumpable ??= GetComponent<IJumpable>();
-            _animated ??= GetComponent<IAnimated>();
+            _fightable = GetComponent<IFightable>();
+            _movable = GetComponent<IMovable>();
+            _jumpable = GetComponent<IJumpable>();
+            _animated = GetComponent<IAnimated>();
 
             _fightable ??= GetComponentInChildren<IFightable>();
             _movable ??= GetComponentInChildren<IMovable>();

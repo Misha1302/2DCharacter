@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PlayerClasses
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerMovable : MonoBehaviour, IMovable
+    public class PlayerMoveBehaviour : MonoBehaviour, IMovable
     {
         private const string HORIZONTAL_AXIS = "Horizontal";
 
@@ -15,13 +15,13 @@ namespace PlayerClasses
         [SerializeField] private float speed;
         [SerializeField] private float stopSpeed;
         [SerializeField] private float maxHorizontalSpeed;
-        [SerializeField] private Rigidbody2D playerRigidbody;
         [SerializeField] private Transform _playerToRotate;
 
         private IAnimated _animated;
         private IFightable _fightable;
         private float _horizontalStopSpeed;
         private IJumpable _jumpable;
+        private Rigidbody2D _playerRigidbody;
         private float _t;
 
 
@@ -49,11 +49,11 @@ namespace PlayerClasses
         private void StopPlayer(float xVelocity)
         {
             xVelocity = Mathf.Lerp(xVelocity, 0, _t);
-            playerRigidbody.velocity = new Vector2(xVelocity, playerRigidbody.velocity.y);
+            _playerRigidbody.velocity = new Vector2(xVelocity, _playerRigidbody.velocity.y);
 
             _t += 0.5f * Time.deltaTime * stopSpeed;
 
-            if (Math.Abs(playerRigidbody.velocity.magnitude) > 0.5f) return;
+            if (Math.Abs(_playerRigidbody.velocity.magnitude) > 0.5f) return;
 
             if (_animated.GetCurrentAnimation() == AnimationsEnum.Run)
                 StartIdleAnimation();
@@ -73,10 +73,10 @@ namespace PlayerClasses
         {
             var horizontal = HorizontalMovement * speed * Time.deltaTime;
 
-            playerRigidbody.AddForce(new Vector2(horizontal, 0));
+            _playerRigidbody.AddForce(new Vector2(horizontal, 0));
 
-            KeepHorizontalSpeedLimit(playerRigidbody, maxHorizontalSpeed);
-            SetPlayerFlip(_playerToRotate, playerRigidbody.velocity.x);
+            KeepHorizontalSpeedLimit(_playerRigidbody, maxHorizontalSpeed);
+            SetPlayerFlip(_playerToRotate, _playerRigidbody.velocity.x);
             StartRunAnimation();
         }
 
@@ -90,7 +90,7 @@ namespace PlayerClasses
                 if (_horizontalStopSpeed == 0)
                 {
                     _t = 0;
-                    _horizontalStopSpeed = playerRigidbody.velocity.x;
+                    _horizontalStopSpeed = _playerRigidbody.velocity.x;
                 }
 
                 StopPlayer(_horizontalStopSpeed);
@@ -102,7 +102,7 @@ namespace PlayerClasses
         }
 
 
-        #region interface implementation
+        #region IAnimated interface implementation
 
         public float HorizontalMovement { get; private set; }
 
@@ -118,6 +118,8 @@ namespace PlayerClasses
             _animated = animated;
             _jumpable = jumpable;
             _fightable = fightable;
+
+            _playerRigidbody = GetComponent<Rigidbody2D>();
         }
 
         #endregion

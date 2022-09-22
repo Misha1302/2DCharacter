@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlayerClasses
 {
-    public class PlayerFightable : MonoBehaviour, IFightable
+    public class PlayerFightBehaviour : MonoBehaviour, IFightable
     {
         private const float ANIMATION_TIME = 0.583f;
 
@@ -64,7 +64,7 @@ namespace PlayerClasses
             StartAttackAnimation();
         }
 
-        #region interface implementation
+        #region IAnimated interface implementation
 
         public bool IsFighting()
         {

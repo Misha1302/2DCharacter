@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace TargetDummy
         private AnimationsEnum? _currentAnimation;
 
 
-        #region interface implementation
+        #region IAnimated interface implementation
 
         public AnimationsEnum? GetCurrentAnimation()
         {

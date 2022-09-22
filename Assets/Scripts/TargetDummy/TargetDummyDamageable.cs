@@ -7,7 +7,7 @@ namespace TargetDummy
     {
         private IAnimated _animated;
         
-        #region interface implementation
+        #region IAnimated interface implementation
         
         public void GetDamage(int damage)
         {
